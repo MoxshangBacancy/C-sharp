@@ -1,18 +1,46 @@
-﻿using System;
-using Task1; 
+using System;
 
-class Program
+namespace Task1
 {
-    static void Main(string[] args)
+    class Program
     {
-        Console.WriteLine("Enter the number: ");
+        public static int CalculateSumOfDigits(int number)
+        {
+            int sum = 0;
+            int temp = Math.Abs(number);
 
-        int number = int.Parse(Console.ReadLine());
+            while (temp != 0)
+            {
+                sum += temp % 10;
+                temp /= 10;
+            }
 
+            return sum;
+        }
 
-        int sum = day.CalculateSumOfDigits(number);
+        static void Main(string[] args)
+        {
+            try
+            {
+                Console.Write("Enter an integer: ");
+                int number = int.Parse(Console.ReadLine());
 
-   
-        Console.WriteLine($"The sum of the digits of {number} is: {sum}");
+                int sum = CalculateSumOfDigits(number);
+
+                Console.WriteLine($"The sum of the digits of {number} is: {sum}");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid input! Please enter a valid integer.");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Number is too large! Please enter a smaller integer.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+            }
+        }
     }
 }
