@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BMS
 {
@@ -17,30 +16,29 @@ namespace BMS
         public string[] myNominee = new string[100];
         public double[] myBalance = new double[100];
         private Dictionary<string, List<Transaction>> transactionHistory = new Dictionary<string, List<Transaction>>();
-         // Add a new transaction to the account's history
-    private void AddTransaction(string accountId, string type, double amount)
-    {
-        if (!transactionHistory.ContainsKey(accountId))
-        {
-            transactionHistory[accountId] = new List<Transaction>();
-        }
-        
-        var transaction = new Transaction(type, amount);
-        transactionHistory[accountId].Add(transaction);
-    }
 
-        // Method to show transaction history for an account
+        private void AddTransaction(string accountId, string type, double amount)
+        {
+            if (!transactionHistory.ContainsKey(accountId))
+            {
+                transactionHistory[accountId] = new List<Transaction>();
+            }
+
+            var transaction = new Transaction(type, amount);
+            transactionHistory[accountId].Add(transaction);
+        }
+
         public void ShowTransactions()
         {
             Console.WriteLine("Enter your Account ID: ");
-            string inId = Console.ReadLine();  // Capture user input for account ID
+            string inId = Console.ReadLine();
 
             if (transactionHistory.ContainsKey(inId))
             {
                 Console.WriteLine($"Transaction history for Account ID: {inId}");
                 foreach (var transaction in transactionHistory[inId])
                 {
-                    Console.WriteLine(transaction);  // Assuming your Transaction class has a ToString() method
+                    Console.WriteLine(transaction);
                 }
             }
             else
@@ -48,8 +46,6 @@ namespace BMS
                 Console.WriteLine("No transactions found for this account.");
             }
         }
-
-
 
         IDGenerator Id = new IDGenerator();
         DOB dob = new DOB();
@@ -65,13 +61,12 @@ namespace BMS
             ID = this.id;
             myId[idnum] = ID;
             idnum++;
-
         }
+
         public void showAll()
         {
             Console.WriteLine("All accounts are:\n");
 
-            // Create a list to store account info
             var accountList = new List<(string Name, double Balance)>();
 
             for (int i = 0; i < idnum; i++)
@@ -79,10 +74,8 @@ namespace BMS
                 accountList.Add((myName[i], myBalance[i]));
             }
 
-            // Sort the list by balance
             var sortedList = accountList.OrderBy(account => account.Balance).ThenBy(account => account.Name).ToList();
 
-            // Display the sorted accounts
             foreach (var account in sortedList)
             {
                 Console.WriteLine("Name: " + account.Name);
@@ -91,12 +84,10 @@ namespace BMS
             }
         }
 
-       
         public void GetTotalBalance()
         {
             double totalBalance = 0;
 
-            // Calculate total balance
             for (int i = 0; i < idnum; i++)
             {
                 totalBalance += myBalance[i];
@@ -104,8 +95,6 @@ namespace BMS
 
             Console.WriteLine("Total balance in the bank: " + totalBalance);
         }
-
-
 
         public void showInfo()
         {
@@ -126,19 +115,16 @@ namespace BMS
             {
                 Console.WriteLine("Your id is wrong!");
             }
-
-
         }
 
         public void create_account()
         {
-
             string accType;
             string name;
-            int d, m, y;
             string nominee;
             double balance;
             string input;
+
             Console.WriteLine("1. Debit Account");
             Console.WriteLine("2. Credit Account");
             Console.WriteLine("3. Savings Account");
@@ -147,7 +133,6 @@ namespace BMS
 
             if (input == "1")
             {
-
                 accType = "Debit";
                 myAccType[idnum] = accType;
                 Console.Write("Name:");
@@ -155,26 +140,29 @@ namespace BMS
                 name = Convert.ToString(Console.ReadLine());
                 myName[idnum] = name;
 
-                while (val == true)
+                val = true;
+                while (val)
                 {
-                    Console.WriteLine("Enter date: ");
+                    Console.WriteLine("Enter date of birth (Sample: 23/08/1995): ");
+                    string dobInput = Console.ReadLine();
 
-                    d = Convert.ToInt32(Console.ReadLine());
-                    m = Convert.ToInt32(Console.ReadLine());
-                    y = Convert.ToInt32(Console.ReadLine());
-                    dob.set(d, m, y);
-                    if (dob.printDate() == false)
+                    if (dob.set(dobInput)) // If date is valid
                     {
-                        myDob[idnum] = Convert.ToString(d + "/" + m + "/" + y);
+                        myDob[idnum] = dobInput; // Store the date
                         val = false;
                     }
-                    else val = true;
+                    else
+                    {
+                        val = true;
+                    }
                 }
-                val = true;
+
                 Console.WriteLine("Enter Nominee name: ");
                 nominee = Convert.ToString(Console.ReadLine());
                 myNominee[idnum] = nominee;
-                while (debval == true)
+
+                debval = true;
+                while (debval)
                 {
                     Console.WriteLine("Enter account balance: ");
                     balance = Convert.ToDouble(Console.ReadLine());
@@ -190,46 +178,51 @@ namespace BMS
                     }
                 }
                 debval = true;
+
                 Console.WriteLine("Created debit account successfully...! ");
                 id = Id.generate();
                 id = id + "Deb";
                 Console.WriteLine("Your Account Id : " + id);
                 GetAcc(id);
-
             }
             else if (input == "2")
             {
                 accType = "Credit";
                 myAccType[idnum] = accType;
                 Console.Write("Name:");
+
                 name = Convert.ToString(Console.ReadLine());
                 myName[idnum] = name;
-                while (val == true)
-                {
-                    Console.WriteLine("Enter date: ");
 
-                    d = Convert.ToInt32(Console.ReadLine());
-                    m = Convert.ToInt32(Console.ReadLine());
-                    y = Convert.ToInt32(Console.ReadLine());
-                    dob.set(d, m, y);
-                    if (dob.printDate() == false)
+                val = true;
+                while (val)
+                {
+                    Console.WriteLine("Enter date of birth (Sample: 23/08/1995): ");
+                    string dobInput = Console.ReadLine();
+
+                    if (dob.set(dobInput)) // If date is valid
                     {
-                        myDob[idnum] = Convert.ToString(d + "-" + m + "-" + y);
+                        myDob[idnum] = dobInput; // Store the date
                         val = false;
                     }
-                    else val = true;
+                    else
+                    {
+                        val = true;
+                    }
                 }
-                val = true;
+
                 Console.WriteLine("Enter Nominee name: ");
                 nominee = Convert.ToString(Console.ReadLine());
                 myNominee[idnum] = nominee;
-                while (debval == true)
+
+                debval = true;
+                while (debval)
                 {
                     Console.WriteLine("Enter account balance: ");
                     balance = Convert.ToDouble(Console.ReadLine());
                     if (balance < cr.minBalance)
                     {
-                        Console.WriteLine("Credit Account's min val is -100000!");
+                        Console.WriteLine("Credit Account's min value is -100000!");
                         debval = true;
                     }
                     else
@@ -239,12 +232,12 @@ namespace BMS
                     }
                 }
                 debval = true;
+
                 Console.WriteLine("Created Credit account successfully...! ");
                 id = Id.generate();
                 id = id + "Cre";
                 Console.WriteLine("Your Account Id : " + id);
                 GetAcc(id);
-
             }
             else if (input == "3")
             {
@@ -254,40 +247,38 @@ namespace BMS
 
                 name = Convert.ToString(Console.ReadLine());
                 myName[idnum] = name;
-                while (val == true)
-                {
-                    Console.WriteLine("Enter date: ");
 
-                    d = Convert.ToInt32(Console.ReadLine());
-                    m = Convert.ToInt32(Console.ReadLine());
-                    y = Convert.ToInt32(Console.ReadLine());
-                    dob.set(d, m, y);
-                    if (dob.printDate() == false)
+                val = true;
+                while (val)
+                {
+                    Console.WriteLine("Enter date of birth (Sample: 23/08/1995): ");
+                    string dobInput = Console.ReadLine();
+
+                    if (dob.set(dobInput)) // If date is valid
                     {
-                        myDob[idnum] = Convert.ToString(d + "-" + m + "-" + y);
+                        myDob[idnum] = dobInput; // Store the date
                         val = false;
                     }
-                    else val = true;
+                    else
+                    {
+                        val = true;
+                    }
                 }
-                val = true;
+
                 Console.WriteLine("Enter Nominee name: ");
                 nominee = Convert.ToString(Console.ReadLine());
                 myNominee[idnum] = nominee;
+
                 Console.WriteLine("Enter account balance: ");
                 balance = Convert.ToDouble(Console.ReadLine());
                 myBalance[idnum] = balance;
+
                 Console.WriteLine("Created Savings account successfully...! ");
                 id = Id.generate();
                 id = id + "Sav";
                 Console.WriteLine("Your Account Id : " + id);
                 GetAcc(id);
-
             }
-
-
-
-
-
         }
 
         public void deposit()
@@ -319,7 +310,7 @@ namespace BMS
                     myBalance[indexNum] = sv.balance;
                 }
 
-                AddTransaction(inId, "Deposit", depval); // Add deposit transaction
+                AddTransaction(inId, "Deposit", depval);
             }
             else
             {
@@ -356,7 +347,7 @@ namespace BMS
                     myBalance[indexNum] = sv.balance;
                 }
 
-                AddTransaction(inId, "Withdraw", depval); // Add withdrawal transaction
+                AddTransaction(inId, "Withdraw", depval);
             }
             else
             {
@@ -374,45 +365,57 @@ namespace BMS
         private int month;
         private int year;
 
-        public void set(int d, int m, int y)
+        public bool set(string dateInput)
         {
+            string[] dateParts = dateInput.Split('/');
 
-            this.day = d;
-            this.month = m;
-            this.year = y;
-
-
+            if (dateParts.Length == 3 &&
+                int.TryParse(dateParts[0], out day) &&
+                int.TryParse(dateParts[1], out month) &&
+                int.TryParse(dateParts[2], out year))
+            {
+                if (checkDate())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid date format. Please use dd/mm/yyyy.");
+                return false;
+            }
         }
+
         public bool checkDate()
         {
-            if (day > 31 || month > 12 || year > 2016)
+            if (day > 31 || month > 12 || year > 2016 || day < 1 || month < 1 || year < 1900)
             {
-                Console.WriteLine("Invalid date ");
+                Console.WriteLine("Invalid date.");
                 return false;
-
             }
             else
+            {
                 return true;
-
+            }
         }
-        public bool printDate()
+
+        public void printDate()
         {
-
-
-            if (checkDate() == true)
+            if (checkDate())
             {
-                Console.WriteLine("Date is : " + day + "-" + month + "-" + year);
-                return false;
+                Console.WriteLine($"Date is: {day}-{month}-{year} (Sample: 23/08/1995)");
             }
             else
-                Console.WriteLine("please enter date again");
-            return true;
-
-
+            {
+                Console.WriteLine("Please enter a valid date.");
+            }
         }
     }
 }
-
 
 namespace BMS
 {
@@ -428,11 +431,10 @@ namespace BMS
             storeId = gid + ++id;
 
             return storeId;
-
         }
-
     }
 }
+
 namespace BMS
 {
     class Transaction
@@ -454,8 +456,3 @@ namespace BMS
         }
     }
 }
-
-
-
-
-
