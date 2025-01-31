@@ -16,6 +16,40 @@ namespace BMS
         public string[] myDob = new string[100];
         public string[] myNominee = new string[100];
         public double[] myBalance = new double[100];
+        private Dictionary<string, List<Transaction>> transactionHistory = new Dictionary<string, List<Transaction>>();
+         // Add a new transaction to the account's history
+    private void AddTransaction(string accountId, string type, double amount)
+    {
+        if (!transactionHistory.ContainsKey(accountId))
+        {
+            transactionHistory[accountId] = new List<Transaction>();
+        }
+        
+        var transaction = new Transaction(type, amount);
+        transactionHistory[accountId].Add(transaction);
+    }
+
+        // Method to show transaction history for an account
+        public void ShowTransactions()
+        {
+            Console.WriteLine("Enter your Account ID: ");
+            string inId = Console.ReadLine();  // Capture user input for account ID
+
+            if (transactionHistory.ContainsKey(inId))
+            {
+                Console.WriteLine($"Transaction history for Account ID: {inId}");
+                foreach (var transaction in transactionHistory[inId])
+                {
+                    Console.WriteLine(transaction);  // Assuming your Transaction class has a ToString() method
+                }
+            }
+            else
+            {
+                Console.WriteLine("No transactions found for this account.");
+            }
+        }
+
+
 
         IDGenerator Id = new IDGenerator();
         DOB dob = new DOB();
@@ -36,13 +70,42 @@ namespace BMS
         public void showAll()
         {
             Console.WriteLine("All accounts are:\n");
+
+            // Create a list to store account info
+            var accountList = new List<(string Name, double Balance)>();
+
             for (int i = 0; i < idnum; i++)
             {
-                Console.WriteLine(myId[i]);
-                Console.WriteLine();
+                accountList.Add((myName[i], myBalance[i]));
+            }
 
+            // Sort the list by balance
+            var sortedList = accountList.OrderBy(account => account.Balance).ThenBy(account => account.Name).ToList();
+
+            // Display the sorted accounts
+            foreach (var account in sortedList)
+            {
+                Console.WriteLine("Name: " + account.Name);
+                Console.WriteLine("Balance: " + account.Balance);
+                Console.WriteLine();
             }
         }
+
+       
+        public void GetTotalBalance()
+        {
+            double totalBalance = 0;
+
+            // Calculate total balance
+            for (int i = 0; i < idnum; i++)
+            {
+                totalBalance += myBalance[i];
+            }
+
+            Console.WriteLine("Total balance in the bank: " + totalBalance);
+        }
+
+
 
         public void showInfo()
         {
@@ -247,7 +310,7 @@ namespace BMS
                 {
                     cr.balance = myBalance[indexNum];
                     cr.deposit(depval);
-                    myBalance[indexNum] = db.balance;
+                    myBalance[indexNum] = cr.balance;
                 }
                 else if (myAccType[indexNum] == "Savings")
                 {
@@ -256,14 +319,14 @@ namespace BMS
                     myBalance[indexNum] = sv.balance;
                 }
 
+                AddTransaction(inId, "Deposit", depval); // Add deposit transaction
             }
-
             else
             {
                 Console.WriteLine("Your id is wrong!");
             }
-
         }
+
         public void withdraw()
         {
             int indexNum;
@@ -293,12 +356,12 @@ namespace BMS
                     myBalance[indexNum] = sv.balance;
                 }
 
+                AddTransaction(inId, "Withdraw", depval); // Add withdrawal transaction
             }
             else
             {
                 Console.WriteLine("Your id is wrong!");
             }
-
         }
     }
 }
@@ -368,6 +431,27 @@ namespace BMS
 
         }
 
+    }
+}
+namespace BMS
+{
+    class Transaction
+    {
+        public string Type { get; set; }
+        public double Amount { get; set; }
+        public DateTime Date { get; set; }
+
+        public Transaction(string type, double amount)
+        {
+            Type = type;
+            Amount = amount;
+            Date = DateTime.Now;
+        }
+
+        public override string ToString()
+        {
+            return $"{Date.ToString("yyyy-MM-dd HH:mm:ss")} - {Type}: {Amount}";
+        }
     }
 }
 
