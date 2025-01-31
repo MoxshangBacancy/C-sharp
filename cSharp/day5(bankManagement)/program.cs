@@ -10,11 +10,11 @@ namespace BMS
         static void Main(string[] args)
         {
             String input;
-            //DOB dob = new DOB();
-            //IDGenerator id = new IDGenerator();
-            //Credit cr = new Credit();
-            //Debit db = new Debit();
-            //Savings sv = new Savings();
+            DOB dob = new DOB();
+            IDGenerator id = new IDGenerator();
+            Credit cr = new Credit();
+            Debit db = new Debit();
+            Savings sv = new Savings();
             Bank bn = new Bank();
             Console.WriteLine("****  Welcome to Bank Management System  ***");
             while (true)
@@ -24,9 +24,11 @@ namespace BMS
                 Console.WriteLine("2. Show account information");
                 Console.WriteLine("3. Deposit from account");
                 Console.WriteLine("4. Withdraw from account");
-                Console.WriteLine("5. Show all account with id");
-                Console.WriteLine("6. Clear screen");
-                Console.WriteLine("7. Exit");
+                Console.WriteLine("5. Look at your account transactions");
+                Console.WriteLine("6. Show all account with name");
+                Console.WriteLine("7. Get Total Bank Balance");
+                Console.WriteLine("8. Clear screen");
+                Console.WriteLine("9. Exit");
                 object ob1 = Console.ReadLine();
                 input = Convert.ToString(ob1);
 
@@ -53,13 +55,22 @@ namespace BMS
                 }
                 else if (input == "5")
                 {
-                    bn.showAll();
+                  bn.ShowTransactions();  // This will prompt the user to enter their account ID internally
+
                 }
                 else if (input == "6")
                 {
-                    Console.Clear();
+                    bn.showAll();
                 }
                 else if (input == "7")
+                {
+                    bn.GetTotalBalance();
+                }
+                else if (input == "8")
+                {
+                    Console.Clear();
+                }
+                else if (input == "9")
                 {
                     Environment.Exit(0);
                 }
