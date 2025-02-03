@@ -10,25 +10,21 @@ class Program
     {
         try
         {
-            // Prompt user for input
             Console.WriteLine("Enter numbers separated by spaces:");
             string input = Console.ReadLine();
 
-            // Convert input to a list of integers
             List<int> numbers = input.Split(' ')
                                      .Select(n => int.Parse(n.Trim()))
                                      .ToList();
 
-            // Thread-safe collection for storing results
             ConcurrentDictionary<int, int> results = new ConcurrentDictionary<int, int>();
 
-            // Parallel processing with exception handling inside
             Parallel.ForEach(numbers, number =>
             {
                 try
                 {
-                    int squared = number * number; // Perform computation
-                    results[number] = squared; // Store result safely
+                    int squared = number * number; 
+                    results[number] = squared; 
                 }
                 catch (Exception ex)
                 {
@@ -36,9 +32,9 @@ class Program
                 }
             });
 
-            // Ensure ordered output
+    
             Console.WriteLine("Squared results:");
-            foreach (var key in numbers) // Maintain input order
+            foreach (var key in numbers) 
             {
                 Console.WriteLine($"{key}^2 = {results[key]}");
             }
