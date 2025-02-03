@@ -63,10 +63,6 @@ public class Student
     {
         return $"{Name}, Age: {Age}";
     }
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Name, Age);
-    }
 }
 
 class Program
