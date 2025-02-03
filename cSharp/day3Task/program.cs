@@ -63,16 +63,6 @@ public class Student
     {
         return $"{Name}, Age: {Age}";
     }
-
-    public override bool Equals(object obj)
-    {
-        if (obj == null || GetType() != obj.GetType())
-            return false;
-
-        Student other = (Student)obj;
-        return Name == other.Name && Age == other.Age;
-    }
-
     public override int GetHashCode()
     {
         return HashCode.Combine(Name, Age);
