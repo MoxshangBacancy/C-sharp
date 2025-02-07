@@ -17,17 +17,20 @@ namespace task7
     {
         public List<Patient> PatientNameList = new List<Patient> { };
 
-        public void AdmitPatient(Patient patient)
+        void IHospitalOperations.AdmitPatient(Patient patient)
         {
+
             PatientNameList.Add(patient);
+
             Console.WriteLine($"Patient {patient.Name} admitted successfully.");
+
         }
-        public void DischargePatient(Patient patient)
+        void IHospitalOperations.DischargePatient(Patient patient)
         {
             PatientNameList.Remove(patient);
             Console.WriteLine($"Patient {patient.Name} discharged successfully.");
         }
-        public void DisplayPatients()
+        void IHospitalOperations.DisplayPatients()
         {
             foreach (Patient patient in PatientNameList)
             {
