@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HMS;
 
 namespace task7
 {
-        public partial class PatientStatus
+    public partial class PatientStatusC
+    {
+        public void ScheduleAppointment()
         {
-            public void ScheduleAppointment()
-            {
-                Console.WriteLine("Your appointment is booked for {0}", DateTime.Now);
+            Console.WriteLine("Your appointment is booked for {0}", DateTime.Now);
 
-            }
-            public void DisplayPatients()
+        }
+        public void DisplayPatients()
+        {
+            foreach(Patient patient in PatientNameLista)
             {
-                foreach (string patient in PatientNameList)
-                {
-                    Console.WriteLine(patient);
-                }
+                Console.WriteLine(patient);
             }
-         }
+        }
+
+
+    }
 }
