@@ -39,6 +39,7 @@ namespace task7
             //{
             //    Console.WriteLine(patient.Name);
             //}
+            pat.DisplayPatients();  
         }
     }
 }
