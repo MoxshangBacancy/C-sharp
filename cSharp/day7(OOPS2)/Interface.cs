@@ -13,11 +13,11 @@ namespace task7
         void DischargePatient(Patient patient);
         void DisplayPatients();
     }
+
     class HospitalManager : IHospitalOperations
     {
-        public List<Patient> PatientNameList = new List<Patient> { };
 
-        PatientStatus pat = new PatientStatus();
+        PatientStatusC pat = new PatientStatusC();
 
         void IHospitalOperations.AdmitPatient(Patient patient)
         {
@@ -30,15 +30,15 @@ namespace task7
         }
         void IHospitalOperations.DischargePatient(Patient patient)
         {
-            PatientNameList.Remove(patient);
-            Console.WriteLine($"Patient {patient.Name} discharged successfully.");
+            pat.DischargePatient(patient);
+            //Console.WriteLine($"Patient {patient.Name} discharged successfully.");
         }
         void IHospitalOperations.DisplayPatients()
         {
-            foreach (Patient patient in PatientNameList)
-            {
-                Console.WriteLine(patient.Name);
-            }
+            //foreach (Patient patient in PatientNameList)
+            //{
+            //    Console.WriteLine(patient.Name);
+            //}
         }
     }
 }
