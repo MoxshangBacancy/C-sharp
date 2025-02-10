@@ -21,12 +21,9 @@ namespace task7
 
         void IHospitalOperations.AdmitPatient(Patient patient)
         {
-
             //PatientNameList.Add(patient);
             pat.AdmitPatient(patient);
-
             //Console.WriteLine($"Patient {patient.Name} admitted successfully.");
-
         }
         void IHospitalOperations.DischargePatient(Patient patient)
         {
