@@ -12,7 +12,7 @@ class program
         Doctor doctor = new Doctor();//calling persons constructor (task 1 base keyword)
         IHospitalOperations admin1 = new HospitalManager();
         MedicalRecordDatabase medicalRecordDatabase = new MedicalRecordDatabase();
-        PatientStatus patientStatus = new PatientStatus();
+        PatientStatusC patientStatus = new PatientStatusC();
         //patient.DisplayInfo("moxsahng", 22);
         Console.WriteLine("Enter your name and age (e.g., John 25):");
         string input = Console.ReadLine(); // Read the whole line
@@ -66,12 +66,15 @@ class program
                 medicalRecordDatabase.LogMedicalRecord(name, "Fever");
                     break;
             case 5:
-                patientStatus.AdmitPatient(name);
-                patientStatus.DischargePatient(name);
+                //patientStatus.AdmitPatient(name);
+                //patientStatus.DischargePatient(name);
+                //patientStatus.ScheduleAppointment();
+                //patientStatus.DisplayPatients();
+                admin1.AdmitPatient(patient);
+                admin1.DischargePatient(patient);
+                admin1.DisplayPatients();
                 patientStatus.ScheduleAppointment();
-                patientStatus.DisplayPatients();
-
-                break;
+                   break;
 
             default:
                 Console.WriteLine("Please select a choice");
