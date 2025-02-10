@@ -7,7 +7,7 @@ using HMS;
 
 namespace task7
 {
-    abstract class HospitalService
+    public abstract class HospitalService
     {
         string HospitalPolicy = @"
         **********************************************
@@ -46,4 +46,5 @@ namespace task7
             Console.WriteLine(HospitalPolicy);
         }
     }
+
 }
