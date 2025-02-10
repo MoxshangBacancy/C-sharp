@@ -7,7 +7,7 @@ using task7;
 
 namespace HMS
 {
-    class Person: HospitalService
+    public class Person: HospitalService
     {
         public string Name;
         public int Age;
@@ -39,15 +39,14 @@ namespace HMS
         }
 
     }
-    
-    class Patient : Person
+    public class Patient : Person//,HospitalService no multiple inheritance supported. 
     {
         private string Symptoms;
         public Patient(): base()
         {
             
         }
-        public override void DisplayInfo(string Name, int Age).
+        public override void DisplayInfo(string Name, int Age)// when overriding you can add parameters.
         {
             base.DisplayInfo(Name, Age);
             //this.Name = Name;
@@ -58,16 +57,20 @@ namespace HMS
         {
             this.Symptoms = Symptoms.Trim();
         }
+        //public override void GetServiceType()
+        //{
+
+        //};
+
     }
-    
-    class Doctor : Person
+    class Doctor : Person//,HospitalService no multiple inheritance supported. 
     {
         private string Department;
         public Doctor() : base()
         {
 
         }
-        public override void DisplayInfo(string Name, int Age)
+        public override void DisplayInfo(string Name, int Age)// when overriding you can add parameters.
         {
             base.DisplayInfo(Name, Age);
             //this.Name = Name;
